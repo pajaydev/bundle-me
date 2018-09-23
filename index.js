@@ -1,41 +1,65 @@
 const path = require('path');
-const { lstatSync, readdirSync } = require('fs');
+const { lstatSync, lstat, readdirSync } = require('fs');
 const fs = require('fs');
+
 
 async function bundle(options) {
 
-    if (!options.name) await Promise.reject(new Error("invalid input folder"));
+    if (!options.path) await Promise.reject(new Error("invalid input folder"));
     if (!options.extn) await Promise.reject(new Error("Extension 'extn' is required"));
-    if (!Array.isArray(options.extn)) await Promise.reject(new Error("Extension 'extn' should be an array"));
-
-    // console.log(path.resolve(process.cwd(), options.name));
-    // const sourcePath = path.resolve(process.cwd(), options.name);
-    // console.log(isDirectory(sourcePath));
-    // const outputPath = createOutputFile(options);
-    // if (isDirectory(sourcePath)) {
-    //     console.log(fs.readdirSync(sourcePath));
-    //     const files = fs.readdirSync(sourcePath);
-    //     files.forEach((file) => {
-    //         const innerFile = path.join(sourcePath, file);
-    //         console.log(isFile(innerFile));
-    //         if (isDirectory(innerFile)) {
-
-    //         } else {
-
-    //         }
-    //     })
-    // }
-    // return isDirectory(sourcePath);
-    // // if () {
-
-    // }
+    //if (!Array.isArray(options.extn)) await Promise.reject(new Error("Extension 'extn' should be an array"));
+    const sourcePath = path.join(process.cwd(), options.path);
+    const outputPath = createOutputFile(options);
+    let count = 0;
+    return await walkThrough(sourcePath, outputPath, options.extn, count);
 
 }
 
+
+async function walkThrough(sourcePath, outputPath, extn, count) {
+    console.log(count);
+    if (isDirectory(sourcePath)) {
+        const files = fs.readdirSync(sourcePath);
+
+        console.log(files.length);
+        files.forEach((file) => {
+            count++;
+            // console.log("+++" + extn);
+            const innerFile = path.join(sourcePath, file);
+            // if (isDirectory(innerFile)) {
+            //     console.log(path.join(sourcePath, innerFile));
+            // } else {
+            //     console.log(isExtnValid(file, extn));
+            //     if (isExtnValid(file)) {
+            //         console.log(file);
+            //     }
+            // }
+            console.log("inner" + innerFile);
+            fs.stat(innerFile, (error, stats) => {
+                if (stats.isDirectory()) {
+                    count--;
+                    console.log("countttttttt" + count);
+                    walkThrough(innerFile, outputPath, extn, count);
+                } else {
+                    count--;
+                    console.log("countt" + count);
+                    if (isExtnValid(innerFile, extn)) {
+                        const contents = fs.readFileSync(innerFile).toString();
+                        fs.appendFileSync(outputPath, contents);
+                    };
+                }
+            });
+        });
+    }
+    return Promise.resolve(outputPath);
+};
+
+const isExtnValid = (file, extn) => {
+    const extName = path.extname(file).split('.').pop();
+    return extName === extn;
+}
 const createOutputFile = (options) => {
-
-
-    const outputPath = options.output ? options.output : path.resolve(process.cwd(), 'bundle-me.js');
+    const outputPath = options.output ? options.output : path.resolve(process.cwd(), 'bundle-me.' + options.extn);
     fs.writeFileSync(outputPath, '');
     return outputPath;
 }
@@ -50,16 +74,9 @@ const isFile = (filePath) => {
 
 
 
-
-// find dir
-// iterate through all files
-// create new file
-// 
-
-
-
-
-
-bundle({ name: 'sample', extn: 'js' }).catch((error) => {
+bundle({ path: 'sample', extn: 'js' }).then((success) => {
+    console.log("success");
+    console.log(success);
+}).catch((error) => {
     console.log("error" + error);
 })
