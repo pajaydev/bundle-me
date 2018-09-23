@@ -3,25 +3,24 @@ const { lstatSync, lstat, readdirSync } = require('fs');
 const fs = require('fs');
 
 
-async function bundle(options) {
-
-    if (!options.path) await Promise.reject(new Error("invalid input folder"));
-    if (!options.extn) await Promise.reject(new Error("Extension 'extn' is required"));
+function bundle(options, callback) {
+    if (!options.path) throw new Error("invalid input folder");
+    if (!options.extn) throw new Error("Extension 'extn' is required");
     //if (!Array.isArray(options.extn)) await Promise.reject(new Error("Extension 'extn' should be an array"));
     const sourcePath = path.join(process.cwd(), options.path);
     const outputPath = createOutputFile(options);
     let count = 0;
-    return await walkThrough(sourcePath, outputPath, options.extn, count);
+    walkThrough(sourcePath, outputPath, options.extn, count, callback);
 
 }
 
 
-async function walkThrough(sourcePath, outputPath, extn, count) {
+function walkThrough(sourcePath, outputPath, extn, count, callback) {
     console.log(count);
     if (isDirectory(sourcePath)) {
         const files = fs.readdirSync(sourcePath);
 
-        console.log(files.length);
+        console.log("lengthtttttttt" + files.length);
         files.forEach((file) => {
             count++;
             // console.log("+++" + extn);
@@ -35,24 +34,35 @@ async function walkThrough(sourcePath, outputPath, extn, count) {
             //     }
             // }
             console.log("inner" + innerFile);
+            console.log("shakala" + count);
             fs.stat(innerFile, (error, stats) => {
                 if (stats.isDirectory()) {
                     count--;
                     console.log("countttttttt" + count);
-                    walkThrough(innerFile, outputPath, extn, count);
+                    walkThrough(innerFile, outputPath, extn, count, callback);
                 } else {
                     count--;
-                    console.log("countt" + count);
                     if (isExtnValid(innerFile, extn)) {
                         const contents = fs.readFileSync(innerFile).toString();
                         fs.appendFileSync(outputPath, contents);
                     };
+                    if (count <= 0) {
+                        callback(outputPath);
+                    }
                 }
             });
+            console.log("finish" + count);
         });
+    } else {
+        console.log("doneeee");
+        //return Promise.resolve(sourcePath);
+        callback(outputPath);
     }
-    return Promise.resolve(outputPath);
+    //console.log("*****" + count);
+    //return Promise.resolve(outputPath);
 };
+
+
 
 const isExtnValid = (file, extn) => {
     const extName = path.extname(file).split('.').pop();
@@ -74,9 +84,9 @@ const isFile = (filePath) => {
 
 
 
-bundle({ path: 'sample', extn: 'js' }).then((success) => {
-    console.log("success");
-    console.log(success);
+bundle({ path: '', extnasd: 'js' }, function (data) {
+    console.log(data);
 }).catch((error) => {
-    console.log("error" + error);
+    console.log("error");
+    console.log(error);
 })
