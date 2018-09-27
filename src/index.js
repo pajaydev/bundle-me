@@ -12,26 +12,29 @@ function bundle(options, callback) {
 
 }
 
-function walkThrough(dir, outputPath, extn, allFiles = []) {
-    const files = fs.readdirSync(dir).map(f => join(dir, f))
-    allFiles.push(...files)
+function walkThrough(sourcePath, outputPath, extn, fileArray = []) {
+    const files = getAllFiles(sourcePath);
+
     files.forEach(f => {
         if (fs.statSync(f).isDirectory()) {
-            walkThrough(f, outputPath, extn, allFiles);
+            walkThrough(f, outputPath, extn, fileArray);
         } else {
             if (isExtnValid(f, 'js')) {
+                fileArray.push(...files);
                 const contents = fs.readFileSync(f).toString();
                 fs.appendFileSync(outputPath, contents);
             };
         }
     })
-    return allFiles
+    return {
+        _files: fileArray,
+        _outputPath: outputPath
+    }
 }
 
-
-
-
-
+const getAllFiles = (sourcePath) => {
+    return fs.readdirSync(sourcePath).map(file => join(sourcePath, file))
+}
 
 const isExtnValid = (file, extn) => {
     const extName = path.extname(file).split('.').pop();
@@ -43,11 +46,3 @@ const createOutputFile = (options) => {
     return outputPath;
 }
 
-
-
-
-
-
-
-console.log(bundle({ path: 'static', extn: 'js' }));
-console.log("successs");
