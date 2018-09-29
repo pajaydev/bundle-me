@@ -2,7 +2,7 @@ const bundlejs = require('../src/index');
 
 function bundleMe(filePath) {
     try {
-        bundlejs({ path: filePath, extn: 'js' });
+        console.log(bundlejs({ path: filePath, extn: 'js', outputPath: 'example/bundle.js' })._files);
     }
     catch (error) {
         console.log(error);

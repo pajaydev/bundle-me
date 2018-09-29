@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const { join } = require('path');
 
-function bundle(options) {
+function bundleResource(options) {
     if (!options) throw new Error("invalid input");
     if (!options.path) throw new Error("please provide valid input folder path");
     if (!options.extn) options.extn = 'js';
@@ -20,7 +20,7 @@ function walkThrough(sourcePath, outputPath, extn, fileArray = []) {
         if (fs.statSync(file).isDirectory()) {
             walkThrough(file, outputPath, extn, fileArray);
         } else {
-            if (isExtnValid(file, 'js')) {
+            if (isExtnValid(file, extn)) {
                 fileArray.push(...files);
                 const contents = fs.readFileSync(file).toString();
                 fs.appendFileSync(outputPath, contents);
@@ -45,22 +45,10 @@ const isExtnValid = (file, extn) => {
 };
 
 const createOutputFile = (options) => {
-    const outputPath = options.output ? options.output : path.resolve(process.cwd(), 'bundle-me.' + options.extn);
+    const outputPath = options.outputPath ? path.resolve(options.outputPath) : path.resolve(process.cwd(), 'bundle-me.' + options.extn);
     fs.writeFileSync(outputPath, '');
     return outputPath;
 }
 
 
-module.exports = bundle;
-//console.log(bundle());
-
-function ajay() {
-    try {
-        bundle({ path: "static" })
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-ajay();
-
+module.exports = bundleResource;
