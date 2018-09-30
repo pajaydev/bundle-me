@@ -1,12 +1,20 @@
 const bundlejs = require('../src/index');
 
-function bundleMe(filePath) {
+function getAllFiles(filePath) {
     try {
-        console.log(bundlejs({ path: filePath, extn: 'js', outputPath: 'example/bundle.js' })._files);
+        bundlejs({ path: filePath, extn: 'js' }).files;
     }
     catch (error) {
         console.log(error);
     }
-}
+};
 
-bundleMe('static');
+
+function bundleMe(filePath) {
+    try {
+        bundlejs({ path: filePath, extn: 'js' }).createBundle;
+    }
+    catch (error) {
+        console.log(error);
+    }
+};
