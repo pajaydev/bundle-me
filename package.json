@@ -3,11 +3,18 @@
   "version": "1.0.0",
   "description": "Bundles all the files inside the directory",
   "main": "src/index.js",
+  "license": "MIT",
   "scripts": {
     "start": "node src/index.js",
     "test": "npm run jshint",
     "jshint": "jshint"
   },
-  "author": "Ajaykumar Prathap",
-  "license": "ISC"
+  "keywords": [
+    "bundle",
+    "bundlename",
+    "bundleall",
+    "allfiles",
+    "getAllFilenames"
+  ],
+  "author": "Ajaykumar Prathap"
 }
