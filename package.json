@@ -16,5 +16,10 @@
     "allfiles",
     "getAllFilenames"
   ],
-  "author": "Ajaykumar Prathap"
+  "author": "Ajaykumar Prathap",
+  "devDependencies": {
+    "jshint": "^2.9.6",
+    "mocha": "~5",
+    "chai": "~3"
+  }
 }
