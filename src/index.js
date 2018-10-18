@@ -8,14 +8,18 @@ function bundleResource(options) {
     if (!options) throw new Error("invalid input");
     if (!options.path) throw new Error("please provide valid input folder path");
     //if (!Array.isArray(options.extn)) await Promise.reject(new Error("Extension 'extn' should be an array"));
-    const sourcePath = path.join(process.cwd(), options.path);
-    const outputPath = createOutputFile(options);
-    console.log(outputPath);
+
     return {
-        createBundle: walkThrough(sourcePath, outputPath, options.extn),
-        files: getAllFiles(sourcePath, options.extn)
+        createBundle: createBundle,
+        files: getAllFiles
     }
 };
+
+function createBundle(sourcePath, options) {
+    console.log("createeee");
+    const outputPath = createOutputFile(options);
+    return walkThrough(sourcePath, outputPath, options.extn);
+}
 
 // iterate through all the files.
 function walkThrough(sourcePath, outputPath, extn = 'js') {
@@ -35,7 +39,11 @@ function walkThrough(sourcePath, outputPath, extn = 'js') {
 
 /* Get all files in the input directory and returns 
 the array of files. */
-function getAllFiles(sourcePath, extn, fileArray = []) {
+function getAllFiles(options) {
+    console.log("get all files" + sourcePath);
+    if (!options) throw new Error("invalid input");
+    if (!options.path) throw new Error("please provide valid input folder path");
+    const sourcePath = path.join(process.cwd(), options.path);
     const files = getFiles(sourcePath);
     fileArray.push(...files);
     files.forEach(file => {
@@ -64,7 +72,8 @@ const isExtnValid = (file, extn) => {
 
 // create output bundle path.
 const createOutputFile = (options) => {
-    const outputPath = options.outputPath ? path.resolve(options.outputPath) : path.resolve(process.cwd(), 'bundle-me.' + options.extn);
+    const extn = options.extn ? options.extn : 'js';
+    const outputPath = options.outputPath ? path.resolve(options.outputPath) : path.resolve(process.cwd(), 'bundle-me.' + extn);
     fs.writeFileSync(outputPath, '');
     return outputPath;
 }

@@ -6,8 +6,9 @@
   "license": "MIT",
   "scripts": {
     "start": "node src/index.js",
-    "test": "npm run jshint",
-    "jshint": "jshint"
+    "test": "mocha",
+    "jshint": "jshint",
+    "clean": "rm -rf bundle-me.js bundle-me.css"
   },
   "keywords": [
     "bundle",
