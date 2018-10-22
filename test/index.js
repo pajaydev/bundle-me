@@ -22,4 +22,3 @@ describe('Test bundle-me', () => {
     });
 });
 
-

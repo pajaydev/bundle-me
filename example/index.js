@@ -1,8 +1,10 @@
-const bundlejs = require('../src/index');
+const { createBundle, getAllFiles } = require('../src/index');
 
-function getAllFiles(filePath) {
+function getFiles(filePath) {
     try {
-        bundlejs({ path: filePath, extn: 'js' }).files();
+        getAllFiles({ path: filePath });
+        //[ '/Users/aprathap/Documents/git/bundle-me/static/a.js',
+        //'/Users/aprathap/Documents/git/bundle-me/static/b.js' ]
     }
     catch (error) {
         console.log(error);
@@ -12,12 +14,12 @@ function getAllFiles(filePath) {
 
 function bundleMe(filePath) {
     try {
-        bundlejs({ path: filePath }).createBundle;
+        createBundle({ path: filePath });
     }
     catch (error) {
         console.log(error);
     }
 };
 
-getAllFiles('static');
+getFiles('static');
 //console.log(bundlejs({ path: 'static', extn: 'js' }));

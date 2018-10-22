@@ -4,19 +4,12 @@ const path = require('path');
 const fs = require('fs');
 const { join } = require('path');
 
-function bundleResource(options) {
-    if (!options) throw new Error("invalid input");
-    if (!options.path) throw new Error("please provide valid input folder path");
-    //if (!Array.isArray(options.extn)) await Promise.reject(new Error("Extension 'extn' should be an array"));
-
-    return {
-        createBundle: createBundle,
-        files: getAllFiles
-    }
-};
 
 function createBundle(sourcePath, options) {
     console.log("createeee");
+    if (!options) throw new Error("invalid input");
+    if (!options.path) throw new Error("please provide valid input folder path");
+    const sourcePath = path.join(process.cwd(), options.path);
     const outputPath = createOutputFile(options);
     return walkThrough(sourcePath, outputPath, options.extn);
 }
@@ -39,16 +32,19 @@ function walkThrough(sourcePath, outputPath, extn = 'js') {
 
 /* Get all files in the input directory and returns 
 the array of files. */
-function getAllFiles(options) {
-    console.log("get all files" + sourcePath);
+function getAllFiles(options, fileArray = []) {
     if (!options) throw new Error("invalid input");
     if (!options.path) throw new Error("please provide valid input folder path");
     const sourcePath = path.join(process.cwd(), options.path);
+    return iterateFiles(sourcePath, options.extn, []);
+}
+
+function iterateFiles(sourcePath, extn = 'js', fileArray = []) {
     const files = getFiles(sourcePath);
     fileArray.push(...files);
     files.forEach(file => {
         if (fs.statSync(file).isDirectory()) {
-            getAllFiles(file, extn, fileArray);
+            iterateFiles(file, extn, fileArray);
         }
     });
     if (extn) {
@@ -79,4 +75,7 @@ const createOutputFile = (options) => {
 }
 
 
-module.exports = bundleResource;
+module.exports = {
+    getAllFiles,
+    createBundle
+};
