@@ -5,8 +5,7 @@ const fs = require('fs');
 const { join } = require('path');
 
 
-function createBundle(sourcePath, options) {
-    console.log("createeee");
+function createBundle(options) {
     if (!options) throw new Error("invalid input");
     if (!options.path) throw new Error("please provide valid input folder path");
     const sourcePath = path.join(process.cwd(), options.path);
@@ -39,7 +38,7 @@ function getAllFiles(options, fileArray = []) {
     return iterateFiles(sourcePath, options.extn, []);
 }
 
-function iterateFiles(sourcePath, extn = 'js', fileArray = []) {
+function iterateFiles(sourcePath, extn, fileArray = []) {
     const files = getFiles(sourcePath);
     fileArray.push(...files);
     files.forEach(file => {

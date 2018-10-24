@@ -2,7 +2,7 @@ const { createBundle, getAllFiles } = require('../src/index');
 
 function getFiles(filePath) {
     try {
-        getAllFiles({ path: filePath });
+        return getAllFiles({ path: filePath });
         //[ '/Users/aprathap/Documents/git/bundle-me/static/a.js',
         //'/Users/aprathap/Documents/git/bundle-me/static/b.js' ]
     }
@@ -14,12 +14,17 @@ function getFiles(filePath) {
 
 function bundleMe(filePath) {
     try {
-        createBundle({ path: filePath });
+        return createBundle({ path: filePath });
     }
     catch (error) {
         console.log(error);
     }
 };
 
-getFiles('static');
-//console.log(bundlejs({ path: 'static', extn: 'js' }));
+//getFiles('static');
+//[ '/Users/aprathap/Documents/git/bundle-me/static/a.css',
+//'/Users/aprathap/Documents/git/bundle-me/static/a.js',
+//'/Users/aprathap/Documents/git/bundle-me/static/b.js' ]
+
+console.log(bundleMe('static'));
+// created bundle-me.js

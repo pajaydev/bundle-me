@@ -13,10 +13,10 @@ $ npm install --save bundle-me
 ### Create Bundle
 
 ```js
-const bundleMe = require('bundle-me');
+const {createBundle} = require('bundle-me');
 
  try {
-        bundleMe({ path: filePath, extn: 'js', outputPath: 'example/bundle.js' }).createBundle; // creates bundle and returns the output path.
+        createBundle({ path: filePath, extn: 'js', outputPath: 'example/bundle.js'})// creates bundle and returns the output path.
     }
     catch (error) {
         console.log(error);
@@ -26,10 +26,11 @@ const bundleMe = require('bundle-me');
 ### Get All files
 
 ```js
-const bundleMe = require('bundle-me');
+const { getAllFiles } = require('bundle-me');
 
  try {
-        bundleMe({ path: filePath, extn: 'js', outputPath: 'example/bundle.js' }).files; // returns array of files in directory.
+        getAllFiles({ path: filePath }); 
+        // returns array of files in the given file path.
     }
     catch (error) {
         console.log(error);
