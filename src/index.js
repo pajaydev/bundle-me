@@ -16,6 +16,7 @@ function createBundle(options) {
 // iterate through all the files.
 function walkThrough(sourcePath, outputPath, extn = 'js') {
     const files = getFiles(sourcePath);
+    console.log(files);
     files.forEach(file => {
         if (fs.statSync(file).isDirectory()) {
             walkThrough(file, outputPath, extn);
@@ -54,9 +55,12 @@ function iterateFiles(sourcePath, extn, fileArray = []) {
     return fileArray;
 }
 
-
+// get all the file names in the given directory
 const getFiles = (sourcePath) => {
-    return fs.readdirSync(sourcePath).map(file => join(sourcePath, file))
+    if (fs.statSync(sourcePath).isDirectory()) {
+        return fs.readdirSync(sourcePath).map(file => join(sourcePath, file))
+    }
+    return [sourcePath];
 };
 
 // check extension is valid or not.
@@ -78,3 +82,5 @@ module.exports = {
     getAllFiles,
     createBundle
 };
+
+createBundle({ path: 'static/a' });

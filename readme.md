@@ -1,4 +1,4 @@
-# bundle-me [![Build Status](https://travis-ci.org/ajay2507/bundle-me.svg?branch=master)](https://travis-ci.org/ajay2507/bundle-me)
+# bundle-me [![Build Status](https://travis-ci.org/pajaydev/bundle-me.svg?branch=master)](https://travis-ci.org/pajaydev/bundle-me)
 
 
 ## Install
@@ -55,6 +55,7 @@ I need to Bundle all the files in a particular directory based on the file exten
 Created bundle-me module, which bundle all the files based on the directory into single output file based on your options provided. It provides array of all the files based on the file extension provided.
 
 ## Example
+https://github.com/pajaydev/bundle-me/tree/master/example
 
 ## License
 
