@@ -1,6 +1,6 @@
 {
   "name": "bundle-me",
-  "version": "1.0.2",
+  "version": "1.1.2",
   "description": "Bundles all the files inside the directory",
   "main": "src/index.js",
   "license": "MIT",
@@ -19,8 +19,8 @@
   ],
   "author": "Ajaykumar Prathap",
   "devDependencies": {
+    "chai": "~3",
     "jshint": "^2.9.6",
-    "mocha": "~5",
-    "chai": "~3"
+    "mocha": "~5"
   }
 }
