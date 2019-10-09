@@ -1,6 +1,6 @@
 {
   "name": "bundle-me",
-  "version": "1.1.2",
+  "version": "1.1.4",
   "description": "Bundles all the files inside the directory",
   "main": "src/index.js",
   "license": "MIT",
@@ -17,6 +17,10 @@
     "allfiles",
     "getAllFilenames"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pajaydev/bundle-me.git"
+  },
   "author": "Ajaykumar Prathap",
   "devDependencies": {
     "chai": "~3",

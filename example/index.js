@@ -21,10 +21,10 @@ function bundleMe(filePath) {
     }
 };
 
-//getFiles('static');
-//[ '/Users/aprathap/Documents/git/bundle-me/static/a.css',
-//'/Users/aprathap/Documents/git/bundle-me/static/a.js',
-//'/Users/aprathap/Documents/git/bundle-me/static/b.js' ]
+getFiles('static');
+// [ '/Users/aprathap/Documents/git/bundle-me/static/a.css',
+// '/Users/aprathap/Documents/git/bundle-me/static/a.js',
+// '/Users/aprathap/Documents/git/bundle-me/static/b.js' ]
 
-console.log(bundleMe('static'));
+bundleMe('static');
 // created bundle-me.js

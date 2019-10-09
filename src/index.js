@@ -16,7 +16,6 @@ function createBundle(options) {
 // iterate through all the files.
 function walkThrough(sourcePath, outputPath, extn = 'js') {
     const files = getFiles(sourcePath);
-    console.log(files);
     files.forEach(file => {
         if (fs.statSync(file).isDirectory()) {
             walkThrough(file, outputPath, extn);
