@@ -10,11 +10,11 @@ describe('Test bundle-me', () => {
     });
 
     it("Test getAllFiles method", () => {
-        expect(getAllFiles({ path: 'static' }).length).to.equal(3);
+        expect(getAllFiles({ path: 'static' }).length).to.equal(4);
     });
 
     it("Test getAllFiles method with extn", () => {
-        expect(getAllFiles({ path: 'static', extn: 'js' }).length).to.equal(2);
+        expect(getAllFiles({ path: 'static', extn: 'js' }).length).to.equal(3);
         expect(getAllFiles({ path: 'static', extn: 'css' }).length).to.equal(1);
     });
 });

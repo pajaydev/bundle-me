@@ -1,13 +1,13 @@
 {
   "name": "bundle-me",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Bundles all the files inside the directory",
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
     "start": "node src/index.js",
-    "test": "mocha",
-    "jshint": "jshint",
+    "test": "mocha && npm run lint",
+    "lint": "jshint",
     "clean": "rm -rf bundle-me.js bundle-me.css"
   },
   "keywords": [
@@ -15,7 +15,8 @@
     "bundlename",
     "bundleall",
     "allfiles",
-    "getAllFilenames"
+    "getAllFilenames",
+    "extension"
   ],
   "repository": {
     "type": "git",
