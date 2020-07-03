@@ -10,6 +10,10 @@ $ npm install --save bundle-me
 
 ## Usage
 
+<p align="center">
+<img src="./static/bundleme.png" height="280">
+</p>
+
 ### Create Bundle
 
 ```js
